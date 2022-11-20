@@ -68,6 +68,22 @@
                     {{ __('Register') }}
                 </x-primary-button>
             </div>
+
+            <div>
+                <a href="{{ route('google.login') }}" 
+                    class="mt-4 flex w-full justify-center items-center rounded-md bg-gray-100 hover:bg-gray-800 cursor-pointer"
+                >
+                    <div class="flex justify-center items-center w-full py-4">
+                        <img class="pr-4" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="google" width="40">
+                        {{ __('Register with Google') }}
+                    </div>
+                </a>
+                @if (session('message'))
+                    <div class="pt-4 text-center">
+                        {{ session('message') }}
+                    </div>
+                @endif
+            </div>
         </form>
     </x-auth-card>
 </x-guest-layout>

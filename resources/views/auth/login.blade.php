@@ -41,16 +41,36 @@
                 </label>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex items-center justify-end mt-4 gap-4">
+                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('register') }}">
+                    {{ __('Need new account?') }}
+                </a>
+
                 @if (Route::has('password.request'))
                     <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
                         {{ __('Forgot your password?') }}
                     </a>
                 @endif
 
-                <x-primary-button class="ml-3">
+                <x-primary-button>
                     {{ __('Log in') }}
                 </x-primary-button>
+            </div>
+
+            <div>
+                <a href="{{ route('google.login') }}" 
+                    class="mt-4 flex w-full justify-center items-center rounded-md bg-gray-100 hover:bg-gray-800 cursor-pointer"
+                >
+                    <div class="flex justify-center items-center w-full py-4">
+                        <img class="pr-4" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="google" width="40">
+                        {{ __('Login with Google') }}
+                    </div>
+                </a>
+                @if (session('message'))
+                    <div class="pt-4 text-center">
+                        {{ session('message') }}
+                    </div>
+                @endif
             </div>
         </form>
     </x-auth-card>

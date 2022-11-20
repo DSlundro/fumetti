@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 
 class PasswordResetLinkController extends Controller
 {
@@ -28,9 +31,15 @@ class PasswordResetLinkController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $enteredEmail = $request->validate([
             'email' => ['required', 'email'],
         ]);
+
+        // 
+        $accountType = DB::table('users')->where('email', $enteredEmail)->value('account_type');
+        if($accountType === 'google') {
+            return redirect('login')->with('message', 'You are registered with Google! Login in your account');
+        }
 
         // We will send the password reset link to this user. Once we have attempted
         // to send the link, we will examine the response then see the message we
