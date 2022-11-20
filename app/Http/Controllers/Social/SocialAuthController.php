@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\Social;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialAuthController extends Controller
@@ -47,54 +46,5 @@ class SocialAuthController extends Controller
             
             return redirect('/dashboard');
         }
-
-
-
-
-
-       /*  $existingUser = User::where('email', $userData->email)->where('account_type', 'google')->first();
-
-        if($existingUser) {
-            Auth::login($existingUser);
-        } else {
-            return redirect('register')->with('message', 'Account does not exist, please register!');
-        }
-        return redirect('/dashboard'); */
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public function googleRegisterCallback()
-    {
-        $googleUser = Socialite::driver('google')->user();
-        $existingUser = User::where('email', $googleUser->email)->where('account_type', 'google')->first();
-
-        if($existingUser) {
-            return redirect('login')->with('message', 'Account already exist, please log in!');
-        } else {
-            $user = User::updateOrCreate([
-                'id' => $googleUser->id,
-                'name' => $googleUser->name,
-                'username' => strtok($googleUser->email, '@'),
-                'email' => $googleUser->email,
-                'password' => Hash::make($googleUser->token),
-                'account_type' => 'google'
-            ]);
-        }
-        Auth::login($user);
-        return redirect('/dashboard');
-    
     }
 }
