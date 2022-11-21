@@ -46,7 +46,7 @@
                         {{mb_strimwidth($comic->description,0,30, '...')}}
                     </td>
                     <td class="py-4 px-6 flex flex-col text-center">
-                        <a href="#" class="font-medium py-1 px-4 rounded-md w-full"
+                        <a href="{{ route('comics.show', $comic->id) }}" class="font-medium py-1 px-4 rounded-md w-full"
                             style="background: aqua; border: 1px solid black; color: black;"
                         >View</a>
                         <a href="#" class="font-medium py-1 px-4 rounded-md w-full"
