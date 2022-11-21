@@ -83,6 +83,7 @@ class ComicController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Comic::destroy($id);
+        return redirect('comics')->with('message', 'Comic successfully deleted!');
     }
 }

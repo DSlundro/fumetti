@@ -1,29 +1,41 @@
 @extends('dashboard')
 
 @section('comics')
-<link 
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
-    rel="stylesheet" 
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
-    crossorigin="anonymous"
->
 
-<div class="card">
-    <div class="card-body">
-        
-        <div class="card-body">
-            <h1 class="card-title">Title : {{ $comic->title }}</h1>
-            <img class="py-4" src="{{$comic->cover}}">
-            <h3 class="card-text">Serie : {{ $comic->serie }}</h3>
-            <p class="card-text">Description : {{ $comic->description }}</p>
+<div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+    {{-- IMAGE --}}
+    <img class="rounded-t-lg w-full aspect-square" src="{{$comic->cover}}" alt="" />
+    <div class="p-5">
+        {{-- TITLE --}}
+        <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+            {{$comic->title}}
+        </h5>
+        {{-- SERIE --}}
+        <h5 class="mb-2 text-xl font-normal tracking-tight text-gray-900 dark:text-white"">
+            Serie: {{$comic->serie}}
+        </h5>
+        {{-- DESCRIPTION --}}
+        <p class="py-3 font-normal text-gray-700 dark:text-gray-400">
+            Description: {{mb_strimwidth($comic->description,0,30, '...')}}
+        </p>
+        <div class="flex gap-3 justify-center pt-4">
+            {{-- EDIT --}}
+            <a href="#" class="edit">
+                Edit
+            </a>
+            {{-- DELETE --}}
+            <form method="POST" action="{{ route('comics.show', $comic->id) }}" class="m-0 p-0">
+                @method('DELETE')
+                @csrf
+                
+                <button type="submit" class="delete"
+                    onclick="return confirm(&quot;Confirm delete?&quot;)">
+                    Delete
+                </button>
+            </form>
         </div>
-
-        <a href="#" class="font-medium py-1 px-4 rounded-md w-full"
-            style="background: green; border: 1px solid black; color: black; margin: 8px 0"
-        >Edit</a>
-        <a href="#" class="font-medium py-1 px-4 rounded-md w-full"
-            style="background: red; border: 1px solid black; color: black;"
-        >Delete</a>
     </div>
 </div>
+
+
 @endsection
