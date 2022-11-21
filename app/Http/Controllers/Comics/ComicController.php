@@ -15,7 +15,7 @@ class ComicController extends Controller
      */
     public function index()
     {
-        $comics = Comic::all();
+        $comics = Comic::all()->sortByDesc('id');
         return view('comics.index', compact('comics')); 
     }
 
@@ -26,7 +26,7 @@ class ComicController extends Controller
      */
     public function create()
     {
-        //
+        return view('comics.create');
     }
 
     /**
@@ -37,7 +37,9 @@ class ComicController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        Comic:: create($input);
+        return redirect('comics')->with('message', 'New comic added successfully');
     }
 
     /**
