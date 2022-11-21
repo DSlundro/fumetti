@@ -37,8 +37,15 @@ class ComicController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->all();
-        Comic::create($input);
+
+        $validated = $request->validate([
+            'title' => 'required',
+            'serie' => 'required|max:50',
+            'description' => 'required|max:1000',
+            'cover' => 'required' 
+        ]);
+
+        Comic::create($validated);
         return redirect('comics')->with('message', 'New comic successfully added');
     }
 
@@ -76,8 +83,15 @@ class ComicController extends Controller
     public function update(Request $request, $id)
     {
         $comic = Comic::find($id);
-        $input = $request->all();
-        $comic->update($input);
+
+        $validated = $request->validate([
+            'title' => 'required',
+            'serie' => 'required|max:50',
+            'description' => 'required|max:1000',
+            'cover' => 'required' 
+        ]);
+
+        $comic->update($validated);
         return redirect('comics')->with('message', 'Comic successfully modified');
     }
 
