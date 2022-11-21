@@ -20,7 +20,7 @@
         </p>
         <div class="flex gap-3 justify-center pt-4">
             {{-- EDIT --}}
-            <a href="#" class="edit">
+            <a href="{{ route('comics.edit', $comic->id) }}" class="edit">
                 Edit
             </a>
             {{-- DELETE --}}

@@ -21,7 +21,7 @@
                 Show
             </a>
             {{-- EDIT --}}
-            <a href="#" class="edit">
+            <a href="{{ route('comics.edit', $comic->id) }}" class="edit">
                 Edit
             </a>
             {{-- DELETE --}}

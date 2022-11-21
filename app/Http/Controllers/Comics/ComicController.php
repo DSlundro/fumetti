@@ -38,8 +38,8 @@ class ComicController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        Comic:: create($input);
-        return redirect('comics')->with('message', 'New comic added successfully');
+        Comic::create($input);
+        return redirect('comics')->with('message', 'New comic successfully added');
     }
 
     /**
@@ -62,7 +62,8 @@ class ComicController extends Controller
      */
     public function edit($id)
     {
-        //
+        $comic = Comic::find($id);
+        return view('comics.edit', compact('comic'));
     }
 
     /**
@@ -74,7 +75,10 @@ class ComicController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $comic = Comic::find($id);
+        $input = $request->all();
+        $comic->update($input);
+        return redirect('comics')->with('message', 'Comic successfully modified');
     }
 
     /**
