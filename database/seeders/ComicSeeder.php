@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Comic;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ComicSeeder extends Seeder
@@ -15,13 +15,14 @@ class ComicSeeder extends Seeder
      */
     public function run()
     {
-        for($i=0; $i<40; $i++) {
-            DB::table('comics')->insert([
-                'title' => Str::random(30),
-                'serie' => Str::random(10),
-                'description' => Str::random(255),
-                'cover' => 'https://picsum.photos/id/'.rand(1, 400).'/200/300'
-            ]);
+        for ($i=1; $i < 10; $i++) { 
+            $comic = new Comic();
+            $comic->user_id = rand(1, 5);
+            $comic->title = Str::random(25);
+            $comic->serie = rand(1, 5);
+            $comic->description = Str::random(255);
+            $comic->cover = 'https://picsum.photos/id/'.rand(100, 400).'/200';
+            $comic->save();
         };
     }
 }

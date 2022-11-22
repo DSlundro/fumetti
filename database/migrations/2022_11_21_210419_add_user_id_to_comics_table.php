@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -14,14 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('comics', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->string('title');
-            $table->string('serie');
-            $table->string('description');
-            $table->string('cover');
-            $table->timestamps();
+        Schema::table('comics', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -32,6 +25,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comics');
+        Schema::table('comics', function (Blueprint $table) {
+            $table->dropForeign('comics_user_id_foreign');
+            $table->dropColumn('user_id');
+        });
     }
 };

@@ -15,24 +15,26 @@
         <td class="py-4 px-6">
             {{mb_strimwidth($comic->description,0,30, '...')}}
         </td>
-        <td class="py-4 px-6 flex flex-col justify-center text-center gap-2">
+        <td class="py-4 px-6 flex flex-col justify-center items-center text-center gap-2 max-w-[200px]">
             {{-- SHOW --}}
             <a href="{{ route('comics.show', $comic->id) }}" class="show">
                 Show
             </a>
-            {{-- EDIT --}}
-            <a href="{{ route('comics.edit', $comic->id) }}" class="edit">
-                Edit
-            </a>
-            {{-- DELETE --}}
-            <form method="POST" action="{{ route('comics.show', $comic->id) }}">
-                @method('DELETE')
-                @csrf
-                
-                <button type="submit" class="delete "onclick="return confirm(&quot;Confirm delete?&quot;)">
-                    Delete
-                </button>
-            </form>
+            @if(Auth::user())
+                {{-- EDIT --}}
+                <a href="{{ route('comics.edit', $comic->id) }}" class="edit">
+                    Edit
+                </a>
+                {{-- DELETE --}}
+                <form method="POST" action="{{ route('comics.show', $comic->id) }}" class="w-full">
+                    @method('DELETE')
+                    @csrf
+                    
+                    <button type="submit" class="delete" onclick="return confirm(&quot;Confirm delete?&quot;)">
+                        Delete
+                    </button>
+                </form>
+            @endif
         </td>
     </tr>
 

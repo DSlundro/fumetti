@@ -16,9 +16,10 @@
                         {{ __('ADD') }}
                     </x-nav-link>
                 </div>
+
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('comics.index')" :active="request()->routeIs('comics.index')">
-                        {{ __('MY COMICS') }}
+                        {{ __('ALL COMICS') }}
                     </x-nav-link>
                 </div>
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Comics;
 use App\Http\Controllers\Controller;
 use App\Models\Comic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ComicController extends Controller
 {
@@ -18,6 +19,7 @@ class ComicController extends Controller
         $comics = Comic::all()->sortByDesc('id');
         return view('comics.index', compact('comics')); 
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -36,15 +38,20 @@ class ComicController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+        // asign user_id
+        $request['user_id'] = Auth::user()->id;
 
+        // validate form
         $validated = $request->validate([
+            'user_id' => 'required',
             'title' => 'required',
             'serie' => 'required|max:50',
             'description' => 'required|max:1000',
             'cover' => 'required' 
         ]);
 
+        // create new comic
         Comic::create($validated);
         return redirect('comics')->with('message', 'New comic successfully added');
     }
