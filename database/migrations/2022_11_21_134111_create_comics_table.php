@@ -16,9 +16,7 @@ return new class extends Migration
     {
         Schema::create('comics', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
             $table->string('title');
-            $table->string('serie');
             $table->string('description');
             $table->string('cover');
             $table->timestamps();

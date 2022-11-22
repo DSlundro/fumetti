@@ -11,8 +11,8 @@ class Comic extends Model
 
     protected $fillable = [
         'user_id',
+        'serie_id',
         'title',
-        'serie',
         'description',
         'cover',
     ];
@@ -23,10 +23,9 @@ class Comic extends Model
         return $this->belongsTo(User::class);
     }
 
-/* // Asign Auth user_id on creating 
-    public function save(array $options = array())
+    public function serie()
     {
-        $this->user_id = auth()->id();
-        parent::save($options);
-    } */
+        return $this->belongsTo(Serie::class);
+    }
+
 }

@@ -10,7 +10,7 @@
             {{$comic->title}}
         </td>
         <td class="py-4 px-6">
-            {{$comic->serie}}
+            {{$comic->serie->name}}
         </td>
         <td class="py-4 px-6">
             {{mb_strimwidth($comic->description,0,30, '...')}}

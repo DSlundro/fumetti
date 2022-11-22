@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Comics;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comic;
+use App\Models\Serie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,7 +29,8 @@ class ComicController extends Controller
      */
     public function create()
     {
-        return view('comics.create');
+        $series = Serie::all();
+        return view('comics.create', compact('series'));
     }
 
     /**
@@ -46,11 +48,10 @@ class ComicController extends Controller
         $validated = $request->validate([
             'user_id' => 'required',
             'title' => 'required',
-            'serie' => 'required|max:50',
+            'serie_id' => 'required',
             'description' => 'required|max:1000',
             'cover' => 'required' 
         ]);
-
         // create new comic
         Comic::create($validated);
         return redirect('comics')->with('message', 'New comic successfully added');
@@ -77,7 +78,8 @@ class ComicController extends Controller
     public function edit($id)
     {
         $comic = Comic::find($id);
-        return view('comics.edit', compact('comic'));
+        $series = Serie::all();
+        return view('comics.edit', compact('comic', 'series'));
     }
 
     /**
@@ -91,9 +93,11 @@ class ComicController extends Controller
     {
         $comic = Comic::find($id);
 
+        //dd($request);
+
         $validated = $request->validate([
+            'serie_id' => 'required',
             'title' => 'required',
-            'serie' => 'required|max:50',
             'description' => 'required|max:1000',
             'cover' => 'required' 
         ]);

@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('comics', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id')->nullable()->after('id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('serie_id')->after('user_id');
+            $table->foreign('serie_id')->references('id')->on('series')->onDelete('cascade');
         });
     }
 
@@ -27,8 +27,8 @@ return new class extends Migration
     public function down()
     {
         Schema::table('comics', function (Blueprint $table) {
-            $table->dropForeign('comics_user_id_foreign');
-            $table->dropColumn('user_id');
+            $table->dropForeign('comics_serie_id_foreign');
+            $table->dropColumn('serie_id');
         });
     }
 };

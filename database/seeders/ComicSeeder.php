@@ -15,11 +15,11 @@ class ComicSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=1; $i < 10; $i++) { 
+        for ($i=1; $i < 15; $i++) { 
             $comic = new Comic();
             $comic->user_id = rand(1, 5);
+            $comic->serie_id = rand(1, 5);
             $comic->title = Str::random(25);
-            $comic->serie = rand(1, 5);
             $comic->description = Str::random(255);
             $comic->cover = 'https://picsum.photos/id/'.rand(100, 400).'/200';
             $comic->save();
