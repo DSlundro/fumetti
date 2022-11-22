@@ -17,7 +17,7 @@ class SerieSeeder extends Seeder
     {
         for ($i=1; $i <= 5; $i++) { 
             $serie = new Serie();
-            $serie->name = Str::random(10);
+            $serie->name = 'Serie'.$i;
             $serie->save();
         };
     }

@@ -17,7 +17,7 @@
     @include('comics.partials.form.serie')
 
     {{-- COVER --}}
-    @include('comics.partials.form.cover')
+    @include('comics.partials.form.photo')
 
     {{-- DESCRIPTION --}}
     @include('comics.partials.form.description')

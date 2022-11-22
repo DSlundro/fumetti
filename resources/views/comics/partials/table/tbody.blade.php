@@ -4,7 +4,7 @@
             {{$comic->id}}
         </th>
         <td class="py-4 px-6">
-            <img src="{{$comic->cover}}" alt="cover" width="100" >
+            <img src="{{$comic->photo->link}}" alt="cover" width="100" >
         </td>
         <td class="py-4 px-6">
             {{$comic->title}}

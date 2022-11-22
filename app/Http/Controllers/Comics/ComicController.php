@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Comics;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comic;
+use App\Models\Photo;
 use App\Models\Serie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ComicController extends Controller
 {
@@ -44,14 +46,24 @@ class ComicController extends Controller
         // asign user_id
         $request['user_id'] = Auth::user()->id;
 
+        // CREATE new image
+        Photo::create([
+            'link' => $request['link']
+        ]);
+        
+        // asign photo_id
+        $request['photo_id'] = Photo::max('id');
+
+        //dd($request);
         // validate form
         $validated = $request->validate([
             'user_id' => 'required',
-            'title' => 'required',
             'serie_id' => 'required',
+            'photo_id' => 'required', 
+            'title' => 'required',
             'description' => 'required|max:1000',
-            'cover' => 'required' 
         ]);
+
         // create new comic
         Comic::create($validated);
         return redirect('comics')->with('message', 'New comic successfully added');
@@ -93,15 +105,21 @@ class ComicController extends Controller
     {
         $comic = Comic::find($id);
 
-        //dd($request);
+        // select photo_id of $id
+        $photo_id = DB::table('photos')
+            ->select('photos.id')
+            ->leftJoin('comics', 'comics.photo_id', '=', 'photos.id')
+            ->where('comics.id', $id)
+            ->get();
+        $photo = Photo::find($photo_id[0]->id);
 
         $validated = $request->validate([
             'serie_id' => 'required',
             'title' => 'required',
             'description' => 'required|max:1000',
-            'cover' => 'required' 
         ]);
 
+        $photo->update($request->validate(['link'=> 'required']));
         $comic->update($validated);
         return redirect('comics')->with('message', 'Comic successfully modified');
     }
@@ -114,6 +132,14 @@ class ComicController extends Controller
      */
     public function destroy($id)
     {
+        // select photo_id of $id
+        $photo_id = DB::table('photos')
+            ->select('photos.id')
+            ->leftJoin('comics', 'comics.photo_id', '=', 'photos.id')
+            ->where('comics.id', $id)
+            ->get();
+
+        Photo::destroy($photo_id[0]->id);
         Comic::destroy($id);
         return redirect('comics')->with('message', 'Comic successfully deleted!');
     }

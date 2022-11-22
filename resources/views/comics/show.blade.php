@@ -4,7 +4,7 @@
 
 <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
     {{-- IMAGE --}}
-    <img class="rounded-t-lg w-full aspect-square" src="{{$comic->cover}}" alt="" />
+    <img class="rounded-t-lg w-full aspect-square" src="{{$comic->photo->link}}" alt="" />
     <div class="p-5">
         {{-- TITLE --}}
         <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -12,7 +12,7 @@
         </h5>
         {{-- SERIE --}}
         <h5 class="mb-2 text-xl font-normal tracking-tight text-gray-900 dark:text-white"">
-            Serie: {{$comic->serie}}
+            Serie: {{$comic->serie->name}}
         </h5>
         {{-- DESCRIPTION --}}
         <p class="py-3 font-normal text-gray-700 dark:text-gray-400">
