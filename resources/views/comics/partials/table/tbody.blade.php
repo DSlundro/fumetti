@@ -20,7 +20,7 @@
             <a href="{{ route('comics.show', $comic->id) }}" class="show">
                 Show
             </a>
-            @if(Auth::user())
+            @if(Auth::user()->id == $comic->user_id)
                 {{-- EDIT --}}
                 <a href="{{ route('comics.edit', $comic->id) }}" class="edit">
                     Edit

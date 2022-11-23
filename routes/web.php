@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AllComics\AllComicsController;
 use App\Http\Controllers\Comics\ComicController;
 use App\Http\Controllers\Comments\CommentController;
 use App\Http\Controllers\ProfileController;
@@ -28,5 +29,8 @@ Route::resource('/comics', ComicController::class)->middleware('auth');
 
 /* COMMENTS */
 Route::resource('/comments', CommentController::class)->middleware('auth');
+
+/* ALL COMICS */
+Route::resource('/all_comics', AllComicsController::class);
 
 require __DIR__.'/auth.php';
