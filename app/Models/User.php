@@ -45,8 +45,15 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
 
+    /* COMICS */
     public function comics()
     {
         return $this->hasMany(Comic::class);
+    }
+
+    /* COMMENTS */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

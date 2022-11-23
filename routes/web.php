@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Comics\ComicController;
+use App\Http\Controllers\Comments\CommentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+/* COMICS */
 Route::resource('/comics', ComicController::class)->middleware('auth');
+
+/* COMMENTS */
+Route::resource('/comments', CommentController::class)->middleware('auth');
 
 require __DIR__.'/auth.php';

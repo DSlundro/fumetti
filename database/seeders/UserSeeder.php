@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
     {
         for ($i=1; $i <= 5; $i++) { 
             $user = new User();
-            $user->name = 'Test'.$i;
+            $user->name = 'Name'.$i;
             $user->email = 'test'.$i.'@test.it';
             $user->email_verified_at = now();
             $user->account_type = 'email';

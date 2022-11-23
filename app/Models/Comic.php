@@ -30,10 +30,15 @@ class Comic extends Model
         return $this->belongsTo(Serie::class);
     }
 
-    /* PHOTOS */
+    /* PHOTO */
     public function photo()
     {
         return $this->belongsTo(Photo::class);
     }
 
+    /* COMMENTS */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Comics;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comic;
+use App\Models\Comment;
 use App\Models\Photo;
 use App\Models\Serie;
 use Illuminate\Http\Request;
@@ -77,8 +78,10 @@ class ComicController extends Controller
      */
     public function show($id)
     {
+
         $comic = Comic::find($id);
-        return view('comics.show', compact('comic'));
+        $comments = Comment::all()->where('comic_id', $id)->sortByDesc('created_at');
+        return view('comics.show', compact('comic', 'comments'));
     }
 
     /**
@@ -108,7 +111,7 @@ class ComicController extends Controller
         // select photo_id of $id
         $photo_id = DB::table('photos')
             ->select('photos.id')
-            ->leftJoin('comics', 'comics.photo_id', '=', 'photos.id')
+            ->join('comics', 'comics.photo_id', '=', 'photos.id')
             ->where('comics.id', $id)
             ->get();
         $photo = Photo::find($photo_id[0]->id);
@@ -135,7 +138,7 @@ class ComicController extends Controller
         // select photo_id of $id
         $photo_id = DB::table('photos')
             ->select('photos.id')
-            ->leftJoin('comics', 'comics.photo_id', '=', 'photos.id')
+            ->join('comics', 'comics.photo_id', '=', 'photos.id')
             ->where('comics.id', $id)
             ->get();
 

@@ -12,14 +12,20 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('comics.create')" :active="request()->routeIs('comics.create')">
-                        {{ __('ADD') }}
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        {{ __('ALL COMICS') }}
                     </x-nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('comics.index')" :active="request()->routeIs('comics.index')">
-                        {{ __('ALL COMICS') }}
+                        {{ __('MY COMICS') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('comics.create')" :active="request()->routeIs('comics.create')">
+                        {{ __('ADD') }}
                     </x-nav-link>
                 </div>
 

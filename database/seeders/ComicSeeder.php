@@ -15,7 +15,7 @@ class ComicSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=1; $i < 15; $i++) { 
+        for ($i=1; $i <= 35; $i++) { 
             $comic = new Comic();
             $comic->user_id = rand(1, 5);
             $comic->serie_id = rand(1, 5);
