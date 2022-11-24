@@ -1,7 +1,7 @@
 <thead class="text-xs text-white-700 uppercase bg-gray-50 ">
-    {{-- MESSAGE --}}
-    <div class="flex justify-center pb-6">
-        @include('partials.message')
+    
+    <div class="flex  pb-6">
+        <p>Total Comics: {{count(Auth::user()->comics)}}</p>
     </div>
 
     <tr>
