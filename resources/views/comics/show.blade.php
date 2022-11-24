@@ -76,7 +76,7 @@
                         <p class="inline-flex items-center mr-3 text-sm text-gray-900">
                             <img
                                 class="mr-2 w-6 h-6 rounded-full border {{ Auth::user()->id === $comment->user_id ? 'bg-green-300' : 'bg-red-300'}}"
-                                >{{ $comment->user->name }}
+                                >{{ ($comment->user->name == Auth::user()->name) ? 'YOU' : $comment->user->name}}
                         </p>
                     </div>
                     <button id="dropdownComment1Button" 
