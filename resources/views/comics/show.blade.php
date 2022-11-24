@@ -19,22 +19,24 @@
         <p class="py-3 font-normal text-gray-700 ">
             Description: {{mb_strimwidth($comic->description,0,30, '...')}}
         </p>
-        <div class="flex gap-3 justify-center pt-4">
-            {{-- EDIT --}}
-            <a href="{{ route('comics.edit', $comic->id) }}" class="edit">
-                Edit
-            </a>
-            {{-- DELETE --}}
-            <form method="POST" action="{{ route('comics.show', $comic->id) }}" class="m-0 p-0">
-                @method('DELETE')
-                @csrf
-                
-                <button type="submit" class="delete"
-                    onclick="return confirm(&quot;Confirm delete?&quot;)">
-                    Delete
-                </button>
-            </form>
-        </div>
+        @if (Auth::user()->id === $comic->user_id)
+            <div class="flex gap-3 justify-center pt-4">
+                {{-- EDIT --}}
+                <a href="{{ route('comics.edit', $comic->id) }}" class="edit">
+                    Edit
+                </a>
+                {{-- DELETE --}}
+                <form method="POST" action="{{ route('comics.show', $comic->id) }}" class="m-0 p-0">
+                    @method('DELETE')
+                    @csrf
+                    
+                    <button type="submit" class="delete"
+                        onclick="return confirm(&quot;Confirm delete?&quot;)">
+                        Delete
+                    </button>
+                </form>
+            </div>
+        @endif
     </div>
 </div>
 
