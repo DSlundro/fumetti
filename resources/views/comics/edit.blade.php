@@ -6,6 +6,7 @@
 <form 
     class="form" 
     action="{{ route('comics.update', $comic->id) }}" 
+    enctype="multipart/form-data"
     method="POST">
     @csrf
     @method("PUT")

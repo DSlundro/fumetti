@@ -1,12 +1,29 @@
 @extends('dashboard')
 
 @section('comics')
-
 {{-- COMIC --}}
 <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-md  fixed">
-    {{-- IMAGE --}}
-    <img class="rounded-t-lg w-full aspect-square" src="{{$comic->photo->link}}" alt="" />
-    <div class="p-5">
+        {{-- IMAGE --}}
+        <img class="rounded-t-lg w-full aspect-square" alt="cover" width="100" 
+            src="{{ 
+                strpos($comic->photos[0]['link'] ?? null, 'http') === 0 
+                ? $comic->photos[0]['link'] ?? null 
+                : url('photos/'.$comic->photos[0]['link'] ?? null) }}"  
+        >
+        <div>
+            <h3 class="py-2">All photos:</h3>
+            <div class="flex w-20">
+                @foreach ($comic->photos as $photo)
+                    <img class="rounded-t-lg w-full aspect-square" alt="cover" width="100" 
+                    src="{{ 
+                        strpos($photo->link, 'http') === 0 
+                        ? $photo->link 
+                        : url('photos/'.$photo->link) }}"  
+                    >
+                @endforeach
+            </div>
+        </div>
+        <div class="p-5">
         {{-- TITLE --}}
         <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
             {{$comic->title}}

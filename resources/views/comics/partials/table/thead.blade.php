@@ -9,7 +9,10 @@
             ID
         </th>
         <th scope="col" class="py-3 px-6">
-            Cover
+            Photos
+        </th>
+        <th scope="col" class="py-3 px-6">
+            Photos count
         </th>
         <th scope="col" class="py-3 px-6">
             Title

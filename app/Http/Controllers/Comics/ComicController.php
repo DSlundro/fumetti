@@ -10,6 +10,7 @@ use App\Models\Serie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class ComicController extends Controller
 {
@@ -44,29 +45,40 @@ class ComicController extends Controller
      */
     public function store(Request $request)
     {   
+        /* CREATE COMIC */
         // asign user_id
         $request['user_id'] = Auth::user()->id;
-
-        // CREATE new image
-        Photo::create([
-            'link' => $request['link']
-        ]);
         
-        // asign photo_id
-        $request['photo_id'] = Photo::max('id');
-
-        //dd($request);
         // validate form
         $validated = $request->validate([
             'user_id' => 'required',
             'serie_id' => 'required',
-            'photo_id' => 'required', 
+            'photos' => 'required',
             'title' => 'required',
             'description' => 'required|max:1000',
         ]);
 
         // create new comic
         Comic::create($validated);
+
+
+        /* CREATE PHOTOS */
+        $comic_id = $request['post_id'] = Comic::max('id');
+
+        if($request->hasFile('photos')) 
+        {
+            foreach ($request->file('photos') as $photo) 
+            {
+                $name = time().rand(1, 100).'.'.$photo->extension();
+                $photo->move(('photos'), $name);
+                // CREATE new image
+                Photo::create([
+                    'comic_id' => $comic_id,
+                    'link' => $name,
+                ]);
+            }
+        }
+
         return redirect('comics')->with('message', 'New comic successfully added');
     }
 
@@ -106,23 +118,45 @@ class ComicController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // photos validation
+        $request->validate([
+            'photos' => 'required',
+            'photos.*' => 'image|mimes:png,jpg,jpeg,gif,svg'
+        ]);
+
         $comic = Comic::find($id);
+        $comic->title = $request->input('title');
+        $comic->serie_id = $request->input('serie');
+        
+        // update the photo
+        if($request->hasFile('photos'))
+        {
+            foreach ($request->file('photos') as $photo) 
+            {   
+                $name = time().rand(1, 100).'.'.$photo->extension();
+                $photo->move(('photos'), $name);
+                // replace photo in storage
+                foreach($comic->photos as $photo)
+                {
+                    $oldFile = 'photos/'.$photo->link;
+                    if(File::exists($oldFile))
+                    {
+                        File::delete($oldFile);
+                    }
+                }
+                $photo->link = $name;
+                $photo->update();
+            }
+        }
+        $comic->description = $request->input('description');
 
-        // select photo_id of $id
-        $photo_id = DB::table('photos')
-            ->select('photos.id')
-            ->join('comics', 'comics.photo_id', '=', 'photos.id')
-            ->where('comics.id', $id)
-            ->get();
-        $photo = Photo::find($photo_id[0]->id);
-
+        // comic validation
         $validated = $request->validate([
-            'serie_id' => 'required',
             'title' => 'required',
+            'serie_id' => 'required',
             'description' => 'required|max:1000',
         ]);
 
-        $photo->update($request->validate(['link'=> 'required']));
         $comic->update($validated);
         return redirect('comics')->with('message', 'Comic successfully modified');
     }
@@ -135,14 +169,23 @@ class ComicController extends Controller
      */
     public function destroy($id)
     {
-        // select photo_id of $id
-        $photo_id = DB::table('photos')
-            ->select('photos.id')
-            ->join('comics', 'comics.photo_id', '=', 'photos.id')
+        // select all photos of $id
+        $photos = DB::table('photos')
+            ->select('photos.id', 'link')
+            ->join('comics', 'comics.id', '=', 'photos.comic_id')
             ->where('comics.id', $id)
             ->get();
 
-        Photo::destroy($photo_id[0]->id);
+        // delete all photos and storage files
+        foreach($photos as $photo)
+            {
+                $oldFile = 'photos/'.$photo->link;
+                if(File::exists($oldFile))
+                {
+                    File::delete($oldFile);
+                }
+                Photo::destroy($photo->id);
+            }
         Comic::destroy($id);
         return redirect('comics')->with('message', 'Comic successfully deleted!');
     }

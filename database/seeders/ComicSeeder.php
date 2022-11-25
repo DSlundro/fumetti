@@ -19,7 +19,6 @@ class ComicSeeder extends Seeder
             $comic = new Comic();
             $comic->user_id = rand(1, 5);
             $comic->serie_id = rand(1, 5);
-            $comic->photo_id = rand(1, 50);
             $comic->title = 'Title'.$i;
             $comic->description = Str::random(255);
             $comic->save();

@@ -5,7 +5,8 @@
 <h2 class="form_title">Add new comic</h2>
 <form 
     class="form" 
-    action="{{ route('comics.index') }}" 
+    action="{{ route('comics.index') }}"
+    enctype="multipart/form-data"
     method="POST">
     @csrf
 

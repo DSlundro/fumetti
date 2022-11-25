@@ -12,10 +12,8 @@ class Comic extends Model
     protected $fillable = [
         'user_id',
         'serie_id',
-        'photo_id',
         'title',
         'description',
-        'cover',
     ];
 
     /* USER */
@@ -31,9 +29,9 @@ class Comic extends Model
     }
 
     /* PHOTO */
-    public function photo()
+    public function photos()
     {
-        return $this->belongsTo(Photo::class);
+        return $this->hasMany(Photo::class, 'comic_id');
     }
 
     /* COMMENTS */

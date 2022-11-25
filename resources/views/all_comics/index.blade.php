@@ -9,7 +9,7 @@
         <p>Total Comics: {{count($comics)}}</p>
     </div>
 
-    <table class="w-full text-sm text-left text-white-500 dark:text-white-400">
+    <table class="w-full text-sm text-center text-white-500 dark:text-white-400">
         <thead class="text-xs text-white-700 uppercase bg-gray-50 ">
         
             <tr>
@@ -17,7 +17,10 @@
                     ID
                 </th>
                 <th scope="col" class="py-3 px-6">
-                    Cover
+                    Photos
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Photos count
                 </th>
                 <th scope="col" class="py-3 px-6">
                     Title

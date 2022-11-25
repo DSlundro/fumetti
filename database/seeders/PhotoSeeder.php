@@ -17,6 +17,7 @@ class PhotoSeeder extends Seeder
     {
         for ($i=1; $i <= 50; $i++) { 
             $photo = new Photo();
+            $photo->comic_id = rand(1, 35);
             $photo->link = 'https://picsum.photos/id/'.rand(1, 400).'/200';
             $photo->save();
         };
