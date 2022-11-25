@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Social;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -27,7 +28,7 @@ class SocialAuthController extends Controller
         {
             //do login
             Auth::login($user);
-            return redirect('/dashboard');
+            return redirect(RouteServiceProvider::HOME);
         }
         else{
             // register
@@ -44,7 +45,7 @@ class SocialAuthController extends Controller
 
             Auth::login($user);
             
-            return redirect('/dashboard');
+            return redirect(RouteServiceProvider::HOME);
         }
     }
 }
