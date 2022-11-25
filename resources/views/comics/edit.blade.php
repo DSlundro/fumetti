@@ -2,7 +2,7 @@
 
 @section('comics')
 
-<h2 class="form_title">Add new comic</h2>
+<h2 class="form_title">Edit the comic</h2>
 <form 
     class="form" 
     action="{{ route('comics.update', $comic->id) }}" 

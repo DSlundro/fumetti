@@ -48,12 +48,17 @@ class ComicController extends Controller
         /* CREATE COMIC */
         // asign user_id
         $request['user_id'] = Auth::user()->id;
+
+        // photos validation
+        $request->validate([
+            'photos' => 'required',
+            'photos.*' => 'image|mimes:png,jpg,jpeg,gif,svg'
+        ]);
         
         // validate form
         $validated = $request->validate([
             'user_id' => 'required',
             'serie_id' => 'required',
-            'photos' => 'required',
             'title' => 'required',
             'description' => 'required|max:1000',
         ]);
@@ -120,7 +125,6 @@ class ComicController extends Controller
     {
         // photos validation
         $request->validate([
-            'photos' => 'required',
             'photos.*' => 'image|mimes:png,jpg,jpeg,gif,svg'
         ]);
 
